@@ -16,7 +16,7 @@
 
                 <!-- Extra bottom padding so last card isn't hidden behind the FAB -->
                 <CollectionView.Footer>
-                    <BoxView HeightRequest="88" Color="Transparent" />
+                    <BoxView HeightRequest="88" Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
                 </CollectionView.Footer>
 
                 <CollectionView.ItemTemplate>
