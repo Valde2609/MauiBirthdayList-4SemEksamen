@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             x:Class="MauiBirthdayList.EditPersonPage"
+             Title="EditPersonPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <!-- Name -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Name" FontSize="13" TextColor="#9E9E9E" />
+                <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12,0">
+                    <Entry x:Name="NameEntry"
+                           Placeholder="Full name"
+                           FontSize="15"
+                           ReturnType="Next" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Age -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Age" FontSize="13" TextColor="#9E9E9E" />
+                <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12,0">
+                    <Entry x:Name="AgeEntry"
+                           Placeholder="e.g. 32"
+                           Keyboard="Numeric"
+                           FontSize="15"
+                           ReturnType="Next" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Date of Birth -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Date of birth" FontSize="13" TextColor="#9E9E9E" />
+                <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12,4">
+                    <DatePicker x:Name="DobPicker"
+                                Format="dd MMM yyyy"
+                                FontSize="15"
+                                DateSelected="OnDobSelected"
+                                MaximumDate="{x:Static sys:DateTime.Today}" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Save button -->
+            <Button Text="Save"
+                    Clicked="OnSaveClicked"
+                    BackgroundColor="#1A56DB"
+                    TextColor="White"
+                    FontSize="15"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,12,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

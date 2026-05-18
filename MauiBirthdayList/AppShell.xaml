@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiBirthdayList.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MauiBirthdayList"
+    Title="MauiBirthdayList">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*, Auto" Padding="0,0,10,0">
+            <Label Text="BirthdayList"
+                   VerticalOptions="Center"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White" />
+            <Button Grid.Column="1"
+                    Text="⬅️"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    Clicked="OnSettingsClicked" />
+        </Grid>
+    </Shell.TitleView>
+
+    <!-- Login is the first page shown -->
+    <ShellContent x:Name="LoginShell"
+                  Route="login"
+                  ContentTemplate="{DataTemplate local:LoginPage}" />
+
+    <!-- Main is navigated to after login -->
+    <ShellContent x:Name="MainShell"
+                  Route="main"
+                  ContentTemplate="{DataTemplate local:MainPage}" />
+
+
+</Shell>

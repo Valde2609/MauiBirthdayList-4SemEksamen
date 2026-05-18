@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBirthdayList.MainPage">
+
+    <ScrollView>
+        <Grid>
+
+            <!-- People list -->
+            <CollectionView ItemsSource="{Binding People}"
+                        Margin="16">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+
+                <!-- Extra bottom padding so last card isn't hidden behind the FAB -->
+                <CollectionView.Footer>
+                    <BoxView HeightRequest="88" Color="Transparent" />
+                </CollectionView.Footer>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="#E0E0E0"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="White"
+                            Padding="16">
+
+                            <Grid ColumnDefinitions="*, Auto"
+                              VerticalOptions="Center">
+
+                                <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#1A1A1A" />
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Label Text="Age" FontSize="12" TextColor="#9E9E9E" />
+                                        <Label Text="{Binding Age}" FontSize="13" TextColor="#444444" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Label Text="Date of birth" FontSize="12" TextColor="#9E9E9E" />
+                                        <Label Text="{Binding DateOfBirth, StringFormat='{0:dd MMM yyyy}'}"
+                                           FontSize="13" TextColor="#444444" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                                    <Button Text="Edit"
+                                        CommandParameter="{Binding .}"
+                                        Clicked="OnEditClicked"
+                                        BackgroundColor="#E8F0FE"
+                                        TextColor="#1A56DB"
+                                        FontSize="13"
+                                        CornerRadius="8"
+                                        Padding="12,6" />
+                                    <Button Text="Delete"
+                                        CommandParameter="{Binding .}"
+                                        Clicked="OnDeleteClicked"
+                                        BackgroundColor="#FDE8E8"
+                                        TextColor="#C81E1E"
+                                        FontSize="13"
+                                        CornerRadius="8"
+                                        Padding="12,6" />
+                                </VerticalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+            <!-- Floating Action Button -->
+            <Button Text="+"
+                Clicked="OnAddPersonClicked"
+                FontSize="28"
+                FontAttributes="Bold"
+                BackgroundColor="#1A56DB"
+                TextColor="White"
+                CornerRadius="30"
+                WidthRequest="60"
+                HeightRequest="60"
+                Padding="0"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,24,32" />
+
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

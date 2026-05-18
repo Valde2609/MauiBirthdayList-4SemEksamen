@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBirthdayList.LoginPage"
+             Title="LoginPage"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="32"
+                             Spacing="0"
+                             VerticalOptions="Center">
+
+            <!-- Logo / App name -->
+            <Label Text="BirthdayList"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#1A56DB"
+                   Margin="0,0,0,8" />
+
+            <Label Text="Sign in to continue"
+                   FontSize="14"
+                   TextColor="#9E9E9E"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,40" />
+
+            <!-- Email -->
+            <Label Text="Email" FontSize="13" TextColor="#9E9E9E" Margin="0,0,0,6" />
+            <Border Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="12,0"
+                    Margin="0,0,0,20">
+                <Entry x:Name="EmailEntry"
+                       Placeholder="you@example.com"
+                       Keyboard="Email"
+                       FontSize="15"
+                       ReturnType="Next" />
+            </Border>
+
+            <!-- Password -->
+            <Label Text="Password" FontSize="13" TextColor="#9E9E9E" Margin="0,0,0,6" />
+            <Border Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="12,0"
+                    Margin="0,0,0,32">
+                <Entry x:Name="PasswordEntry"
+                       Placeholder="Password"
+                       IsPassword="True"
+                       FontSize="15"
+                       ReturnType="Done"
+                       Completed="OnLoginClicked" />
+            </Border>
+
+            <!-- Login button -->
+            <Button Text="Log in"
+                    Clicked="OnLoginClicked"
+                    BackgroundColor="#1A56DB"
+                    TextColor="White"
+                    FontSize="15"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,0,0,16" />
+
+            <!-- Register button -->
+            <Button Text="Create an account"
+                    Clicked="OnRegisterClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="#1A56DB"
+                    BorderColor="#1A56DB"
+                    BorderWidth="1"
+                    FontSize="15"
+                    CornerRadius="10"
+                    HeightRequest="50" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

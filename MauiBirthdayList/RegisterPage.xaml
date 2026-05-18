@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBirthdayList.RegisterPage"
+             Title="RegisterPage"
+             Shell.NavBarIsVisible="False">
+             
+    <ScrollView>
+        <VerticalStackLayout Padding="32" Spacing="0" VerticalOptions="Center">
+
+            <Label Text="Create account"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1A56DB"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,8" />
+
+            <Label Text="Start tracking birthdays"
+                   FontSize="14"
+                   TextColor="#9E9E9E"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,40" />
+
+            <!-- Email -->
+            <Label Text="Email" FontSize="13" TextColor="#9E9E9E" Margin="0,0,0,6" />
+            <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 8"
+                    Padding="12,0" Margin="0,0,0,20">
+                <Entry x:Name="EmailEntry"
+                       Placeholder="you@example.com"
+                       Keyboard="Email"
+                       FontSize="15"
+                       ReturnType="Next" />
+            </Border>
+
+            <!-- Password -->
+            <Label Text="Password" FontSize="13" TextColor="#9E9E9E" Margin="0,0,0,6" />
+            <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 8"
+                    Padding="12,0" Margin="0,0,0,20">
+                <Entry x:Name="PasswordEntry"
+                       Placeholder="At least 6 characters"
+                       IsPassword="True"
+                       FontSize="15"
+                       ReturnType="Next" />
+            </Border>
+
+            <!-- Confirm Password -->
+            <Label Text="Confirm password" FontSize="13" TextColor="#9E9E9E" Margin="0,0,0,6" />
+            <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 8"
+                    Padding="12,0" Margin="0,0,0,32">
+                <Entry x:Name="ConfirmPasswordEntry"
+                       Placeholder="Repeat password"
+                       IsPassword="True"
+                       FontSize="15"
+                       ReturnType="Done"
+                       Completed="OnRegisterClicked" />
+            </Border>
+
+            <!-- Register button -->
+            <Button Text="Create account"
+                    Clicked="OnRegisterClicked"
+                    BackgroundColor="#1A56DB"
+                    TextColor="White"
+                    FontSize="15"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,0,0,16" />
+
+            <!-- Back to login -->
+            <Button Text="Already have an account? Log in"
+                    Clicked="OnBackToLoginClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="#1A56DB"
+                    BorderColor="#1A56DB"
+                    BorderWidth="1"
+                    FontSize="15"
+                    CornerRadius="10"
+                    HeightRequest="50" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
