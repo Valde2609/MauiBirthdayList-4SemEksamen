@@ -20,7 +20,7 @@ namespace MauiBirthdayList
 			if (FirebaseAuthService.IsLoggedIn)
 				await GoToAsync("//main");
 		}
-		private async void OnSettingsClicked(object sender, EventArgs e)
+		private async void OnLogoutClicked(object sender, EventArgs e)
 		{
 			bool confirmed = await DisplayAlert("Log out", "Are you sure?", "Yes", "Cancel");
 			if (confirmed)

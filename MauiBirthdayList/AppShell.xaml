@@ -7,17 +7,20 @@
     Title="MauiBirthdayList">
 
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*, Auto" Padding="0,0,10,0">
+        <Grid ColumnDefinitions="*, Auto" Padding="40,0,0,0">
             <Label Text="BirthdayList"
+                   HorizontalOptions="Center"
                    VerticalOptions="Center"
                    FontSize="20"
                    FontAttributes="Bold"
                    TextColor="White" />
-            <Button Grid.Column="1"
-                    Text="⬅️"
+            <ImageButton Grid.Column="1"
+                    Source="logout.png"
                     BackgroundColor="Transparent"
-                    TextColor="White"
-                    Clicked="OnSettingsClicked" />
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    VerticalOptions="Center"
+                    Clicked="OnLogoutClicked" />
         </Grid>
     </Shell.TitleView>
 
