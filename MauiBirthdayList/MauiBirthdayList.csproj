@@ -71,22 +71,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="AddPersonPage.xaml.cs">
+	  <Compile Update="Pages\AddPersonPage.xaml.cs">
 	    <DependentUpon>AddPersonPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="AddPersonPage.xaml">
+	  <MauiXaml Update="Pages\AddPersonPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="EditPersonPage.xaml">
+	  <MauiXaml Update="Pages\EditPersonPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="LoginPage.xaml">
+	  <MauiXaml Update="Pages\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="RegisterPage.xaml">
+	  <MauiXaml Update="Pages\RegisterPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
