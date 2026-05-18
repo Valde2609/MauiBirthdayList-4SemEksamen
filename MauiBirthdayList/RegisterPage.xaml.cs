@@ -1,3 +1,6 @@
+using Firebase.Auth;
+using MauiBirthdayList.Services;
+
 namespace MauiBirthdayList;
 
 public partial class RegisterPage : ContentPage
@@ -6,6 +9,7 @@ public partial class RegisterPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
 	private async void OnRegisterClicked(object sender, EventArgs e)
 	{
 		var email = EmailEntry.Text?.Trim();
@@ -32,15 +36,20 @@ public partial class RegisterPage : ContentPage
 
 		try
 		{
-			// TODO: Replace with Firebase auth call, e.g.:
-			// await FirebaseAuthService.RegisterAsync(email, password);
-
-			await DisplayAlert("Success", "Account created! Please log in.", "OK");
-			await Navigation.PopAsync();
+			await FirebaseAuthService.RegisterAsync(email, password);
+			await DisplayAlert("Success", "Account created! You are now logged in.", "OK");
+			await Shell.Current.GoToAsync("//main");
 		}
-		catch (Exception ex)
+		catch (FirebaseAuthException ex)
 		{
-			await DisplayAlert("Registration failed", ex.Message, "OK");
+			var message = ex.Reason switch
+			{
+				AuthErrorReason.EmailExists => "An account with this email already exists.",
+				AuthErrorReason.WeakPassword => "Password is too weak.",
+				_ => "Registration failed. Please try again."
+			};
+
+			await DisplayAlert("Registration failed", message, "OK");
 		}
 	}
 

@@ -1,3 +1,7 @@
+using Firebase.Auth;
+using MauiBirthdayList.Services;
+
+
 namespace MauiBirthdayList;
 
 public partial class LoginPage : ContentPage
@@ -6,6 +10,7 @@ public partial class LoginPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
 	private async void OnLoginClicked(object sender, EventArgs e)
 	{
 		var email = EmailEntry.Text?.Trim();
@@ -19,25 +24,25 @@ public partial class LoginPage : ContentPage
 
 		try
 		{
-			// TODO: Replace with Firebase auth call, e.g.:
-			// await FirebaseAuthService.LoginAsync(email, password);
-
-			await GoToMainPage();
+			await FirebaseAuthService.LoginAsync(email, password);
+			await Shell.Current.GoToAsync("//main");
 		}
-		catch (Exception ex)
+		catch (FirebaseAuthException ex)
 		{
-			await DisplayAlert("Login failed", ex.Message, "OK");
+			var message = ex.Reason switch
+			{
+				AuthErrorReason.WrongPassword => "Incorrect password.",
+				AuthErrorReason.UnknownEmailAddress => "No account found with that email.",
+				AuthErrorReason.TooManyAttemptsTryLater => "Too many attempts. Please try again later.",
+				_ => "Login failed. Please try again."
+			};
+
+			await DisplayAlert("Login failed", message, "OK");
 		}
 	}
 
 	private async void OnRegisterClicked(object sender, EventArgs e)
 	{
 		await Shell.Current.Navigation.PushAsync(new RegisterPage());
-	}
-
-	private async Task GoToMainPage()
-	{
-		// Swap out the root page so the user can't navigate back to login
-		await Shell.Current.GoToAsync("//main");
 	}
 }

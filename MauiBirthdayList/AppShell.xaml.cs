@@ -1,4 +1,6 @@
-﻿namespace MauiBirthdayList
+﻿using MauiBirthdayList.Services;
+namespace MauiBirthdayList
+
 {
     public partial class AppShell : Shell
     {
@@ -10,6 +12,22 @@
 			Routing.RegisterRoute(nameof(EditPersonPage), typeof(EditPersonPage));
 			Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
 		}
-		private void OnSettingsClicked(object? sender, EventArgs e) { }
+
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
+
+			if (FirebaseAuthService.IsLoggedIn)
+				await GoToAsync("//main");
+		}
+		private async void OnSettingsClicked(object sender, EventArgs e)
+		{
+			bool confirmed = await DisplayAlert("Log out", "Are you sure?", "Yes", "Cancel");
+			if (confirmed)
+			{
+				FirebaseAuthService.Logout();
+				await GoToAsync("//login");
+			}
+		}
 	}
 }
