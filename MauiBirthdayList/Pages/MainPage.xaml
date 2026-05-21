@@ -7,8 +7,8 @@
         <Grid>
 
             <!-- People list -->
-            <CollectionView ItemsSource="{Binding People}"
-                        Margin="16">
+            <CollectionView x:Name="BirthdayList"
+                Margin="16">
 
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
@@ -41,8 +41,15 @@
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout Spacing="4">
                                         <Label Text="Date of birth" FontSize="12" TextColor="#9E9E9E" />
-                                        <Label Text="{Binding DateOfBirth, StringFormat='{0:dd MMM yyyy}'}"
-                                           FontSize="13" TextColor="#444444" />
+                                        <Label FontSize="13" TextColor="#444444">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0}/{1}/{2}">
+                                                    <Binding Path="BirthDayOfMonth" />
+                                                    <Binding Path="BirthMonth" />
+                                                    <Binding Path="BirthYear" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
 

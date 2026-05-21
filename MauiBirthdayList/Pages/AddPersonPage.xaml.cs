@@ -1,3 +1,5 @@
+using MauiBirthdayList.Services;
+
 namespace MauiBirthdayList;
 
 public partial class AddPersonPage : ContentPage
@@ -37,11 +39,15 @@ public partial class AddPersonPage : ContentPage
 			return;
 		}
 
+		// Create a new Person object from api
 		var person = new Person
 		{
+			UserId = FirebaseAuthService.CurrentUserEmail,
 			Name = NameEntry.Text.Trim(),
 			Age = age,
-			DateOfBirth = DobPicker.Date
+			BirthYear = DobPicker.Date.Year,
+			BirthMonth = DobPicker.Date.Month,
+			BirthDayOfMonth = DobPicker.Date.Day
 		};
 
 		PersonAdded?.Invoke(person);

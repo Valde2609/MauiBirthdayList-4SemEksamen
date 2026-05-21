@@ -1,22 +1,22 @@
-﻿using System.Collections.ObjectModel;
+﻿using MauiBirthdayList.Services;
+using System.Collections.ObjectModel;
 using System.Xml;
 
 namespace MauiBirthdayList
 {
     public partial class MainPage : ContentPage
-    {
-
-		public ObservableCollection<Person> People { get; } = new()
 	{
-		new Person { Name = "John Doe",    Age = 32, DateOfBirth = new DateTime(1992, 3, 15) },
-		new Person { Name = "Jane Smith",  Age = 28, DateOfBirth = new DateTime(1996, 7, 22) },
-		new Person { Name = "Bob Johnson", Age = 45, DateOfBirth = new DateTime(1979, 11, 3) },
-	};
+		private readonly BirthdayService _service = new();
+		private readonly string _userId = FirebaseAuthService.CurrentUserEmail;
 
 		public MainPage()
 		{
 			InitializeComponent();
-			BindingContext = this;
+		}
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
+			BirthdayList.ItemsSource = await _service.GetAllAsync(_userId);
 		}
 
 		private async void OnAddPersonClicked(object sender, EventArgs e)
@@ -26,9 +26,10 @@ namespace MauiBirthdayList
 			await Shell.Current.Navigation.PushAsync(addPage);
 		}
 
-		private void OnPersonAdded(Person person)
+		private async void OnPersonAdded(Person person)
 		{
-			People.Add(person);
+			await _service.CreateAsync(person);
+			BirthdayList.ItemsSource = await _service.GetAllAsync(_userId);
 		}
 
 		private async void OnEditClicked(object sender, EventArgs e)
@@ -40,13 +41,10 @@ namespace MauiBirthdayList
 			await Shell.Current.Navigation.PushAsync(editPage);
 		}
 
-		private void OnPersonUpdated(Person updatedPerson)
+		private async void OnPersonUpdated(Person updatedPerson)
 		{
-			var existing = People.FirstOrDefault(p => p.Id == updatedPerson.Id);
-			if (existing is null) return;
-
-			int index = People.IndexOf(existing);
-			People[index] = updatedPerson;
+			await _service.UpdateAsync(updatedPerson);
+			BirthdayList.ItemsSource = await _service.GetAllAsync(_userId);
 		}
 
 		private async void OnDeleteClicked(object sender, EventArgs e)
@@ -54,7 +52,10 @@ namespace MauiBirthdayList
 			var person = (Person)((Button)sender).CommandParameter;
 			bool confirmed = await DisplayAlert("Delete", $"Delete {person.Name}?", "Yes", "Cancel");
 			if (confirmed)
-				People.Remove(person);
+			{
+				await _service.DeleteAsync(person.Id);
+				BirthdayList.ItemsSource = await _service.GetAllAsync(_userId);
+			}
 		}
 	}
 }

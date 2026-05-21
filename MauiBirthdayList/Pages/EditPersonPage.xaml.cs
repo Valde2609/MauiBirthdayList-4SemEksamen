@@ -1,3 +1,5 @@
+using MauiBirthdayList.Services;
+
 namespace MauiBirthdayList;
 
 public partial class EditPersonPage : ContentPage
@@ -14,7 +16,7 @@ public partial class EditPersonPage : ContentPage
 		// Pre-fill the fields with existing values
 		NameEntry.Text = person.Name;
 		AgeEntry.Text = person.Age.ToString();
-		DobPicker.Date = person.DateOfBirth;
+		DobPicker.Date = new DateTime(person.BirthYear, person.BirthMonth, person.BirthDayOfMonth);
 	}
 
 	private void OnDobSelected(object sender, DateChangedEventArgs e)
@@ -43,9 +45,12 @@ public partial class EditPersonPage : ContentPage
 			return;
 		}
 
+		_person.UserId = FirebaseAuthService.CurrentUserEmail;
 		_person.Name = NameEntry.Text.Trim();
 		_person.Age = age;
-		_person.DateOfBirth = DobPicker.Date;
+		_person.BirthYear = DobPicker.Date.Year;
+		_person.BirthMonth = DobPicker.Date.Month;
+		_person.BirthDayOfMonth = DobPicker.Date.Day;
 
 		PersonUpdated?.Invoke(_person);
 		await Navigation.PopAsync();
