@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:MauiBirthdayList"
              x:Class="MauiBirthdayList.MainPage">
 
     <Grid RowDefinitions="Auto, *">
@@ -26,7 +27,7 @@
             </CollectionView.Footer>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:Person">
                     <Border Stroke="#E0E0E0"
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 12"
