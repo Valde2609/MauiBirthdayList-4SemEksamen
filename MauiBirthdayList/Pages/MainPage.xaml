@@ -3,58 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiBirthdayList.MainPage">
 
-    <ScrollView>
-        <Grid>
+    <Grid RowDefinitions="Auto, *">
 
-            <!-- People list -->
-            <CollectionView x:Name="BirthdayList"
+        <!-- Search bar -->
+        <SearchBar x:Name="SearchBar"
+                   Grid.Row="0"
+                   Placeholder="Search by name..."
+                   TextChanged="OnSearchTextChanged"
+                   Margin="16,8" />
+        <!-- People list -->
+        <CollectionView x:Name="BirthdayList"
+                Grid.Row="1"
                 Margin="16">
 
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
-                </CollectionView.ItemsLayout>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+            </CollectionView.ItemsLayout>
 
-                <!-- Extra bottom padding so last card isn't hidden behind the FAB -->
-                <CollectionView.Footer>
-                    <BoxView HeightRequest="88" Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
-                </CollectionView.Footer>
+            <!-- Extra bottom padding so last card isn't hidden behind the FAB -->
+            <CollectionView.Footer>
+                <BoxView HeightRequest="88" Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
+            </CollectionView.Footer>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Stroke="#E0E0E0"
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="#E0E0E0"
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 12"
                             BackgroundColor="White"
                             Padding="16">
 
-                            <Grid ColumnDefinitions="*, Auto"
+                        <Grid ColumnDefinitions="*, Auto"
                               VerticalOptions="Center">
 
-                                <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-                                    <Label Text="{Binding Name}"
+                            <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                                <Label Text="{Binding Name}"
                                        FontSize="16"
                                        FontAttributes="Bold"
                                        TextColor="#1A1A1A" />
-                                    <HorizontalStackLayout Spacing="4">
-                                        <Label Text="Age" FontSize="12" TextColor="#9E9E9E" />
-                                        <Label Text="{Binding Age}" FontSize="13" TextColor="#444444" />
-                                    </HorizontalStackLayout>
-                                    <HorizontalStackLayout Spacing="4">
-                                        <Label Text="Date of birth" FontSize="12" TextColor="#9E9E9E" />
-                                        <Label FontSize="13" TextColor="#444444">
-                                            <Label.Text>
-                                                <MultiBinding StringFormat="{}{0}/{1}/{2}">
-                                                    <Binding Path="BirthDayOfMonth" />
-                                                    <Binding Path="BirthMonth" />
-                                                    <Binding Path="BirthYear" />
-                                                </MultiBinding>
-                                            </Label.Text>
-                                        </Label>
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="Age" FontSize="12" TextColor="#9E9E9E" />
+                                    <Label Text="{Binding Age}" FontSize="13" TextColor="#444444" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="Date of birth" FontSize="12" TextColor="#9E9E9E" />
+                                    <Label FontSize="13" TextColor="#444444">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0}/{1}/{2}">
+                                                <Binding Path="BirthDayOfMonth" />
+                                                <Binding Path="BirthMonth" />
+                                                <Binding Path="BirthYear" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
 
-                                <VerticalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
-                                    <Button Text="Edit"
+                            <VerticalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                                <Button Text="Edit"
                                         CommandParameter="{Binding .}"
                                         Clicked="OnEditClicked"
                                         BackgroundColor="#E8F0FE"
@@ -62,7 +68,7 @@
                                         FontSize="13"
                                         CornerRadius="8"
                                         Padding="12,6" />
-                                    <Button Text="Delete"
+                                <Button Text="Delete"
                                         CommandParameter="{Binding .}"
                                         Clicked="OnDeleteClicked"
                                         BackgroundColor="#FDE8E8"
@@ -70,17 +76,18 @@
                                         FontSize="13"
                                         CornerRadius="8"
                                         Padding="12,6" />
-                                </VerticalStackLayout>
+                            </VerticalStackLayout>
 
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
 
-            </CollectionView>
+        </CollectionView>
 
-            <!-- Floating Action Button -->
-            <Button Text="+"
+        <!-- Floating Action Button -->
+        <Button Text="+"
+                Grid.Row="1"
                 Clicked="OnAddPersonClicked"
                 FontSize="28"
                 FontAttributes="Bold"
@@ -94,7 +101,6 @@
                 VerticalOptions="End"
                 Margin="0,0,24,32" />
 
-        </Grid>
-    </ScrollView>
+    </Grid>
 
 </ContentPage>

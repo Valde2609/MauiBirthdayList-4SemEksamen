@@ -8,6 +8,7 @@ namespace MauiBirthdayList
 	{
 		private readonly BirthdayService _service = new();
 		private readonly string _userId = FirebaseAuthService.CurrentUserEmail;
+		private List<Person> _allPeople = new();
 
 		public MainPage()
 		{
@@ -16,7 +17,19 @@ namespace MauiBirthdayList
 		protected override async void OnAppearing()
 		{
 			base.OnAppearing();
-			BirthdayList.ItemsSource = await _service.GetAllAsync(_userId);
+			_allPeople = await _service.GetAllAsync(_userId);
+			BirthdayList.ItemsSource = _allPeople;
+		}
+		private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+		{
+			var query = e.NewTextValue?.Trim().ToLower();
+
+			if (string.IsNullOrEmpty(query))
+				BirthdayList.ItemsSource = _allPeople;
+			else
+				BirthdayList.ItemsSource = _allPeople
+					.Where(p => p.Name.ToLower().Contains(query))
+					.ToList();
 		}
 
 		private async void OnAddPersonClicked(object sender, EventArgs e)
@@ -29,7 +42,8 @@ namespace MauiBirthdayList
 		private async void OnPersonAdded(Person person)
 		{
 			await _service.CreateAsync(person);
-			BirthdayList.ItemsSource = await _service.GetAllAsync(_userId);
+			_allPeople = await _service.GetAllAsync(_userId);
+			BirthdayList.ItemsSource = _allPeople;
 		}
 
 		private async void OnEditClicked(object sender, EventArgs e)
@@ -44,7 +58,8 @@ namespace MauiBirthdayList
 		private async void OnPersonUpdated(Person updatedPerson)
 		{
 			await _service.UpdateAsync(updatedPerson);
-			BirthdayList.ItemsSource = await _service.GetAllAsync(_userId);
+			_allPeople = await _service.GetAllAsync(_userId);
+			BirthdayList.ItemsSource = _allPeople;
 		}
 
 		private async void OnDeleteClicked(object sender, EventArgs e)
@@ -54,7 +69,8 @@ namespace MauiBirthdayList
 			if (confirmed)
 			{
 				await _service.DeleteAsync(person.Id);
-				BirthdayList.ItemsSource = await _service.GetAllAsync(_userId);
+				_allPeople = await _service.GetAllAsync(_userId);
+				BirthdayList.ItemsSource = _allPeople;
 			}
 		}
 	}
