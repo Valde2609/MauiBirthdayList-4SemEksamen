@@ -108,7 +108,6 @@ namespace MauiBirthdayList
 			{
 				await _service.DeleteAsync(person.Id);
 				_allPeople = await _service.GetAllAsync(_userId);
-				//BirthdayList.ItemsSource = _allPeople;
 				ApplySort();
 			}
 		}
