@@ -18,7 +18,6 @@ namespace MauiBirthdayList
 		{
 			base.OnAppearing();
 			_allPeople = await _service.GetAllAsync(_userId);
-			//BirthdayList.ItemsSource = _allPeople;
 			ApplySort();
 		}
 		private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
@@ -82,7 +81,6 @@ namespace MauiBirthdayList
 		{
 			await _service.CreateAsync(person);
 			_allPeople = await _service.GetAllAsync(_userId);
-			//BirthdayList.ItemsSource = _allPeople;
 			ApplySort();
 		}
 
@@ -99,7 +97,6 @@ namespace MauiBirthdayList
 		{
 			await _service.UpdateAsync(updatedPerson);
 			_allPeople = await _service.GetAllAsync(_userId);
-			//BirthdayList.ItemsSource = _allPeople;
 			ApplySort();
 		}
 
