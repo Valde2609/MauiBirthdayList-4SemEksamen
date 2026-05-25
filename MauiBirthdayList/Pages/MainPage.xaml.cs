@@ -18,11 +18,13 @@ namespace MauiBirthdayList
 		{
 			base.OnAppearing();
 			_allPeople = await _service.GetAllAsync(_userId);
-			BirthdayList.ItemsSource = _allPeople;
+			//BirthdayList.ItemsSource = _allPeople;
+			ApplySort();
 		}
 		private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
 		{
 			var query = e.NewTextValue?.Trim().ToLower();
+			ApplySort();
 
 			if (string.IsNullOrEmpty(query))
 				BirthdayList.ItemsSource = _allPeople;
@@ -30,6 +32,43 @@ namespace MauiBirthdayList
 				BirthdayList.ItemsSource = _allPeople
 					.Where(p => p.Name.ToLower().Contains(query))
 					.ToList();
+		}
+
+		private async void OnSortClicked(object sender, EventArgs e)
+		{
+			string action = await DisplayActionSheet(
+				"Sort by",
+				"Cancel",
+				null,
+				"Name (A-Z)",
+				"Name (Z-A)",
+				"Birthday (Soonest first)",
+				"Birthday (Latest first)"
+			);
+
+			if (action == null || action == "Cancel") return;
+
+			SortButton.Text = $"Sort: {action}";
+
+			_allPeople = action switch
+			{
+				"Name (A-Z)" => _allPeople.OrderBy(p => p.Name).ToList(),
+				"Name (Z-A)" => _allPeople.OrderByDescending(p => p.Name).ToList(),
+				"Birthday (Soonest first)" => _allPeople.OrderBy(p => p.BirthMonth).ThenBy(p => p.BirthDayOfMonth).ToList(),
+				"Birthday (Latest first)" => _allPeople.OrderByDescending(p => p.BirthMonth).ThenByDescending(p => p.BirthDayOfMonth).ToList(),
+				_ => _allPeople
+			};
+
+			ApplySort();
+		}
+
+		private void ApplySort()
+		{
+			var query = SearchBar.Text?.Trim().ToLower();
+
+			BirthdayList.ItemsSource = string.IsNullOrEmpty(query)
+				? _allPeople
+				: _allPeople.Where(p => p.Name.ToLower().Contains(query)).ToList();
 		}
 
 		private async void OnAddPersonClicked(object sender, EventArgs e)
@@ -43,7 +82,8 @@ namespace MauiBirthdayList
 		{
 			await _service.CreateAsync(person);
 			_allPeople = await _service.GetAllAsync(_userId);
-			BirthdayList.ItemsSource = _allPeople;
+			//BirthdayList.ItemsSource = _allPeople;
+			ApplySort();
 		}
 
 		private async void OnEditClicked(object sender, EventArgs e)
@@ -59,7 +99,8 @@ namespace MauiBirthdayList
 		{
 			await _service.UpdateAsync(updatedPerson);
 			_allPeople = await _service.GetAllAsync(_userId);
-			BirthdayList.ItemsSource = _allPeople;
+			//BirthdayList.ItemsSource = _allPeople;
+			ApplySort();
 		}
 
 		private async void OnDeleteClicked(object sender, EventArgs e)
@@ -70,7 +111,8 @@ namespace MauiBirthdayList
 			{
 				await _service.DeleteAsync(person.Id);
 				_allPeople = await _service.GetAllAsync(_userId);
-				BirthdayList.ItemsSource = _allPeople;
+				//BirthdayList.ItemsSource = _allPeople;
+				ApplySort();
 			}
 		}
 	}
